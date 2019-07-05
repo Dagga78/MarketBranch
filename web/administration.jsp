@@ -65,17 +65,21 @@
             <%@ include file="menu.jsp"%>
             <div class="section"></div>
 
-            <h2 style="color: #3fbdad">Administration</h2>
+            <h2 style="color: #3fbdad" class="col s12 center-align">Administration</h2>
             <div class="section"></div>
 
 
 
 
-            <div class="z-depth-1 grey lighten-4 row" style="padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
+            <div class="row">
                 <div class="row">
-                    <div class="card col s6">
-                        <h4 class="center-align">Statistique</h4>
-                        <hr class="col s12">
+                    <div class="col s12 m12 l6">  
+                        <ul class="collection with-header">
+                            <li class="collection-header"><h4>Statistiques</h4></li>
+                            <c:forEach var="stat" items="${stats}">
+                                    <li class="collection-item">${stat.key.getNameProduit()} : ${stat.value}</li>
+                                </c:forEach>
+                        </ul>
                     </div>
                     <div class="card col s6">
                         <h4 class="center-align">Nombre de ventes</h4>
@@ -188,7 +192,7 @@
 
                             </li>
                             <li>
-                                <div class="collapsible-header active" tabindex="0">Catégorie de
+                                <div class="collapsible-header" tabindex="0">Catégorie de
                                     produits<i class="material-icons">
                                         keyboard_arrow_right </i></div>
                                 <div class="collapsible-body">
@@ -323,30 +327,28 @@
                             </li>
                             <li>
 
-                                <div class="collapsible-header" tabindex="0">Entrepôt<i class="material-icons">
+                                <div class="collapsible-header active" tabindex="0">Entrepôt<i class="material-icons ">
                                         keyboard_arrow_right </i></div>
                                 <div class="collapsible-body">
                                     <div class="row">
-                                        <form class="col s12">
-                                            <div class="row">
-                                                <div class="input-field col s3">
-                                                    <input id="libelle_entrepôt" type="text" class="validate">
-                                                    <label for="libelle_entrepôt">Nom entrepôt</label>
-                                                </div>
-                                                <div class="input-field col s3">
-                                                    <input id="adresse_entrepôt" type="text" class="validate">
-                                                    <label for="adresse_entrepôt">Adresse entrepôt</label>
-                                                </div>
-                                                <div class="input-field col s3">
-                                                    <input id="city_entrepôt" type="text" class="validate">
-                                                    <label for="city_entrepôt">Ville entrepôt</label>
-                                                </div>
-                                                <div class="input-field col s3">
-                                                    <a class="waves-effect waves-light green darken-1 btn col s12">Ajouter
-                                                        un entrepôt</a>
-                                                </div>
+                                        <div class="row">
+                                            <div class="input-field col s3">
+                                                <input id="libelle_entrepot" name="libelle_entrepot" type="text" class="validate">
+                                                <label for="libelle_entrepot">Nom entrepôt</label>
                                             </div>
-                                        </form>
+                                            <div class="input-field col s3">
+                                                <input id="adresse_entrepot" name="adresse_entrepot" type="text" class="validate">
+                                                <label for="adresse_entrepot">Adresse entrepôt</label>
+                                            </div>
+                                            <div class="input-field col s3">
+                                                <input id="city_entrepot" name="city_entrepot" type="text" class="validate">
+                                                <label for="city_entrepot">Ville entrepôt</label>
+                                            </div>
+                                            <div class="input-field col s3">
+                                                <a class="waves-effect waves-light green darken-1 btn col s12" onclick="$('#button').val('addWarehouse');$('#form').submit()">Ajouter
+                                                    un entrepôt</a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <form class="col s12">

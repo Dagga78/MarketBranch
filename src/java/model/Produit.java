@@ -47,6 +47,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Produit implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProduit")
+    private List<LogConsultation> logConsultationList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProduit")
     private List<Panier> panierList;
 
     @JoinTable(name = "panier", joinColumns = {
@@ -243,6 +246,15 @@ public class Produit implements Serializable {
 
     public void setPanierList(List<Panier> panierList) {
         this.panierList = panierList;
+    }
+
+    @XmlTransient
+    public List<LogConsultation> getLogConsultationList() {
+        return logConsultationList;
+    }
+
+    public void setLogConsultationList(List<LogConsultation> logConsultationList) {
+        this.logConsultationList = logConsultationList;
     }
     
 }

@@ -16,7 +16,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -41,14 +40,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Utilisateur.findByMailUtilisateur", query = "SELECT u FROM Utilisateur u WHERE u.mailUtilisateur = :mailUtilisateur")
     , @NamedQuery(name = "Utilisateur.findByPasswordUtilisateur", query = "SELECT u FROM Utilisateur u WHERE u.passwordUtilisateur = :passwordUtilisateur")
     , @NamedQuery(name = "Utilisateur.findByAdresseLivraison", query = "SELECT u FROM Utilisateur u WHERE u.adresseLivraison = :adresseLivraison")
-    , @NamedQuery(name = "Utilisateur.findByAdresseFacturation", query = "SELECT u FROM Utilisateur u WHERE u.adresseFacturation = :adresseFacturation")})
+    , @NamedQuery(name = "Utilisateur.findByAdresseFacturation", query = "SELECT u FROM Utilisateur u WHERE u.adresseFacturation = :adresseFacturation")
+    , @NamedQuery(name = "Utilisateur.findByBlock", query = "SELECT u FROM Utilisateur u WHERE u.block = :block")})
 public class Utilisateur implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUser")
-    private List<Panier> panierList;
-
-    @ManyToMany(mappedBy = "utilisateurList")
-    private List<Produit> produitList;
+    private List<LogConsultation> logConsultationList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -77,14 +74,14 @@ public class Utilisateur implements Serializable {
     @Lob
     @Column(name = "img_utilisateur")
     private String imgUtilisateur;
+    @Column(name = "block")
+    private Integer block;
     @JoinColumn(name = "id_sb", referencedColumnName = "id_system_bancaire")
     @ManyToOne
     private SystemBancaire idSb;
     @JoinColumn(name = "id_type_utilisateur", referencedColumnName = "id_type_utilisateur")
     @ManyToOne(optional = false)
     private TypeUtilisateur idTypeUtilisateur;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUtilisateur")
-    private List<Commande> commandeList;
 
     public Utilisateur() {
     }
@@ -167,6 +164,14 @@ public class Utilisateur implements Serializable {
         this.imgUtilisateur = imgUtilisateur;
     }
 
+    public Integer getBlock() {
+        return block;
+    }
+
+    public void setBlock(Integer block) {
+        this.block = block;
+    }
+
     public SystemBancaire getIdSb() {
         return idSb;
     }
@@ -181,15 +186,6 @@ public class Utilisateur implements Serializable {
 
     public void setIdTypeUtilisateur(TypeUtilisateur idTypeUtilisateur) {
         this.idTypeUtilisateur = idTypeUtilisateur;
-    }
-
-    @XmlTransient
-    public List<Commande> getCommandeList() {
-        return commandeList;
-    }
-
-    public void setCommandeList(List<Commande> commandeList) {
-        this.commandeList = commandeList;
     }
 
     @Override
@@ -218,21 +214,12 @@ public class Utilisateur implements Serializable {
     }
 
     @XmlTransient
-    public List<Produit> getProduitList() {
-        return produitList;
+    public List<LogConsultation> getLogConsultationList() {
+        return logConsultationList;
     }
 
-    public void setProduitList(List<Produit> produitList) {
-        this.produitList = produitList;
-    }
-
-    @XmlTransient
-    public List<Panier> getPanierList() {
-        return panierList;
-    }
-
-    public void setPanierList(List<Panier> panierList) {
-        this.panierList = panierList;
+    public void setLogConsultationList(List<LogConsultation> logConsultationList) {
+        this.logConsultationList = logConsultationList;
     }
 
 }

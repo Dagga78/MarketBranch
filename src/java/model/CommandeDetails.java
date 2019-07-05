@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,11 +29,23 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CommandeDetails.findAll", query = "SELECT c FROM CommandeDetails c")
-    , @NamedQuery(name = "CommandeDetails.findByIdCommandeDetails", query = "SELECT c FROM CommandeDetails c WHERE c.idCommandeDetails = :idCommandeDetails")
     , @NamedQuery(name = "CommandeDetails.findByIdCommande", query = "SELECT c FROM CommandeDetails c WHERE c.idCommande = :idCommande")
-    , @NamedQuery(name = "CommandeDetails.findByQuantiteProduit", query = "SELECT c FROM CommandeDetails c WHERE c.quantiteProduit = :quantiteProduit")
-    , @NamedQuery(name = "CommandeDetails.findByCodePromo", query = "SELECT c FROM CommandeDetails c WHERE c.codePromo = :codePromo")})
+    , @NamedQuery(name = "CommandeDetails.findByIdCommandeDetails", query = "SELECT c FROM CommandeDetails c WHERE c.idCommandeDetails = :idCommandeDetails")
+    , @NamedQuery(name = "CommandeDetails.findByQuantiteProduit", query = "SELECT c FROM CommandeDetails c WHERE c.quantiteProduit = :quantiteProduit")})
 public class CommandeDetails implements Serializable {
+
+    @JoinColumn(name = "id_commande", referencedColumnName = "id_commande")
+    @ManyToOne
+    private Commande idCommande;
+    @JoinColumn(name = "id_produit", referencedColumnName = "id_produit")
+    @ManyToOne(optional = false)
+    private Produit idProduit;
+    @JoinColumn(name = "id_status", referencedColumnName = "id_status_commande_details")
+    @ManyToOne(optional = false)
+    private StatusCommandeDetails idStatus;
+    @JoinColumn(name = "id_transporteur", referencedColumnName = "id_transporteur")
+    @ManyToOne(optional = false)
+    private Transporteur idTransporteur;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,21 +55,9 @@ public class CommandeDetails implements Serializable {
     private Integer idCommandeDetails;
     @Column(name = "quantite_produit")
     private Integer quantiteProduit;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Lob
     @Column(name = "code_promo")
-    private Double codePromo;
-    @JoinColumn(name = "id_commande", referencedColumnName = "id_commande")
-    @ManyToOne(optional = false)
-    private Commande idCommande;
-    @JoinColumn(name = "id_produit", referencedColumnName = "id_produit")
-    @ManyToOne(optional = false)
-    private Produit idProduit;
-    @JoinColumn(name = "id_transporteur", referencedColumnName = "id_transporteur")
-    @ManyToOne(optional = false)
-    private Transporteur idTransporteur;
-    @JoinColumn(name = "id_status", referencedColumnName = "id_status_commande_details")
-    @ManyToOne(optional = false)
-    private StatusCommandeDetails idStatus;
+    private String codePromo;
 
     public CommandeDetails() {
     }
@@ -81,44 +82,12 @@ public class CommandeDetails implements Serializable {
         this.quantiteProduit = quantiteProduit;
     }
 
-    public Double getCodePromo() {
+    public String getCodePromo() {
         return codePromo;
     }
 
-    public void setCodePromo(Double codePromo) {
+    public void setCodePromo(String codePromo) {
         this.codePromo = codePromo;
-    }
-
-    public Commande getIdCommande() {
-        return idCommande;
-    }
-
-    public void setIdCommande(Commande idCommande) {
-        this.idCommande = idCommande;
-    }
-
-    public Produit getIdProduit() {
-        return idProduit;
-    }
-
-    public void setIdProduit(Produit idProduit) {
-        this.idProduit = idProduit;
-    }
-
-    public Transporteur getIdTransporteur() {
-        return idTransporteur;
-    }
-
-    public void setIdTransporteur(Transporteur idTransporteur) {
-        this.idTransporteur = idTransporteur;
-    }
-
-    public StatusCommandeDetails getIdStatus() {
-        return idStatus;
-    }
-
-    public void setIdStatus(StatusCommandeDetails idStatus) {
-        this.idStatus = idStatus;
     }
 
     @Override
@@ -144,6 +113,38 @@ public class CommandeDetails implements Serializable {
     @Override
     public String toString() {
         return "model.CommandeDetails[ idCommandeDetails=" + idCommandeDetails + " ]";
+    }
+
+    public Commande getIdCommande() {
+        return idCommande;
+    }
+
+    public void setIdCommande(Commande idCommande) {
+        this.idCommande = idCommande;
+    }
+
+    public Produit getIdProduit() {
+        return idProduit;
+    }
+
+    public void setIdProduit(Produit idProduit) {
+        this.idProduit = idProduit;
+    }
+
+    public StatusCommandeDetails getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(StatusCommandeDetails idStatus) {
+        this.idStatus = idStatus;
+    }
+
+    public Transporteur getIdTransporteur() {
+        return idTransporteur;
+    }
+
+    public void setIdTransporteur(Transporteur idTransporteur) {
+        this.idTransporteur = idTransporteur;
     }
     
 }

@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3.payara-p2 (PAYARA-3579-ff11a82; 2019-03-07T10:51:27+0530) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://bean/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://bean/">
+
+<xs:element name="verifpaiement" type="tns:verifpaiement"/>
+
+<xs:element name="verifpaiementResponse" type="tns:verifpaiementResponse"/>
+
+<xs:complexType name="verifpaiement">
+<xs:sequence>
+<xs:element name="nomproprio" type="xs:string" minOccurs="0"/>
+<xs:element name="prenomproprio" type="xs:string" minOccurs="0"/>
+<xs:element name="cardNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="cardDate" type="xs:string" minOccurs="0"/>
+<xs:element name="cardCrypto" type="xs:string" minOccurs="0"/>
+<xs:element name="prix" type="xs:float" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="verifpaiementResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:systemeBancaire" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="systemeBancaire">
+<xs:sequence>
+<xs:element name="cardCrypto" type="xs:string" minOccurs="0"/>
+<xs:element name="cardDate" type="xs:string" minOccurs="0"/>
+<xs:element name="cardNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="nomproprio" type="xs:string" minOccurs="0"/>
+<xs:element name="prenomproprio" type="xs:string" minOccurs="0"/>
+<xs:element name="solde" type="xs:float" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

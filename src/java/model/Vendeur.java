@@ -6,7 +6,9 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +19,10 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Vendeur.findByPasswordVendeur", query = "SELECT v FROM Vendeur v WHERE v.passwordVendeur = :passwordVendeur")
 })
 public class Vendeur implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idVendeur")
+    private List<Produit> produitList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -205,6 +212,15 @@ public class Vendeur implements Serializable {
     @Override
     public String toString() {
         return "model.Vendeur[ idVendeur=" + idVendeur + " ]";
+    }
+
+    @XmlTransient
+    public List<Produit> getProduitList() {
+        return produitList;
+    }
+
+    public void setProduitList(List<Produit> produitList) {
+        this.produitList = produitList;
     }
 
 }

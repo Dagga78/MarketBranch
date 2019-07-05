@@ -5,6 +5,7 @@
  */
 package servlet;
 
+import controler.HomeControler;
 import controler.SigninControler;
 import java.io.IOException;
 import javax.servlet.AsyncContext;
@@ -48,16 +49,17 @@ public class Inscription extends HttpServlet {
         String button = request.getParameter("button");
         SigninControler data = new SigninControler();
         HttpSession session = request.getSession();
+        HomeControler controler = new HomeControler();
         switch (button) {
             case "signin":
                 response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/signin"));
                 break;
             case "inscription":
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/inscription"));
+                controler.addUser(request.getParameter("nom"), request.getParameter("prenom"), request.getParameter("password"), request.getParameter("email"), request.getParameter("adresse"));
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/home"));
                 break;
             default:
                 doGet(request, response);
         }
     }
-
 }

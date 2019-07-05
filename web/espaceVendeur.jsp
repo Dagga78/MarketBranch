@@ -103,45 +103,65 @@
                         <div class="col s12"><h3>Vos produits : </h3></div>
                         <c:forEach var="produit" items="${produits}">
                             <div class="col s12 m4 l4">
-                                <div class="card animate fadeLeft">
+                                <div class="card animate fadeLeft"  style="height: 500px">
                                     <div class="card-content">
                                         <div onclick="$('#selectedProduct').val('${produit.getIdProduit()}');
                                                 $('#button').val('selectedProduct');
                                                 $('#form').submit();" style="cursor: pointer;">
                                             <p>${produit.getIdVendeur().getNomVendeur()}</p>
                                             <span class="card-title text-ellipsis">${produit.getNameProduit()}</span>
-                                            <img src="${produit.getImgProduit()}" class="responsive-img" alt="">
+                                            <img src="${produit.getImgProduit()}" class="responsive-img" alt="" style=" height: 300px">
                                         </div>
+                                        <div class="row"></div>
                                         <div class="row">
                                             <h5 class="col s12 m12 l8 mt-3">${produit.getPrixStandartProduit()}€</h5>
                                             <a class="col s12 m12 l4 mt-2 waves-effect waves-light gradient-45deg-deep-purple-blue btn modal-trigger"
                                                href="#produit_${produit.getIdProduit()}">Apercu</a>
                                         </div>
+                                        
                                     </div>
                                 </div>
                                 <!-- Modal Structure -->
                                 <div id="produit_${produit.getIdProduit()}" class="modal" tabindex="0">
                                     <div class="modal-content pt-2">
-                                        <div class="row" id="product-one">
-                                            <div class="col s12">
-                                                <a class="modal-close right"><i class="material-icons red-text">close</i></a>
+                                        <div class="row">
+                                            <div class="col s12"></div>
+                                            <h1>Modifier le produit "${produit.getNameProduit()}"</h1>
+                                            <div class="input-field col s12">
+                                                <input id="nomProduitModify_${produit.getIdProduit()}" name="nomProduitModify_${produit.getIdProduit()}" type="text" class="validate" value="${produit.getNameProduit()}" required="required">
+                                                <label for="nomProduitModify_${produit.getIdProduit()}">Nom du produit</label>
                                             </div>
-                                            <div class="col m6">
-                                                <img src="${produit.getImgProduit()}" class="responsive-img">
+                                            <div class="input-field col s12">
+                                                <input id="codeProduitModify_${produit.getIdProduit()}" name="codeProduitModify_${produit.getIdProduit()}" type="text" value="${produit.getProductCode()}" class="validate" required="required">
+                                                <label for="codeProduitModify_${produit.getIdProduit()}">Code produit</label>
                                             </div>
-                                            <div class="col m6">
-                                                <p>${produit.getIdVendeur().getNomVendeur()}</p>
-                                                <h5>${produit.getNameProduit()}</h5>
-                                                <p class="mt-3">${produit.getIdSousCategorieProduit().getIdCategorie().getNomCategorie()} / ${produit.getIdSousCategorieProduit().getNomSousCategorie()}</p>
-                                                <hr class="mb-5">
-                                                <p class="mt-3">${produit.getDescriptionProduit()}</p>
-                                                <h5>${produit.getPrixStandartProduit()}€</h5>
-                                                <a class="waves-effect waves-light btn marron-chart col s12 input-field" onclick="$('#selectedProduct').val('${produit.getIdProduit()}');
-                                                        $('#button').val('addPaner');
-                                                        $('#form').submit();">Ajouter au panier</a>
-                                                <a class="waves-effect waves-light btn orange-chart col s12 input-field" onclick="$('#selectedProduct').val('${produit.getIdProduit()}');
-                                                        $('#button').val('selectedProduct');
-                                                        $('#form').submit();">Voir le produit</a>
+                                            <div class="input-field col s12">
+                                                <textarea id="descriptionProduitModify_${produit.getIdProduit()}" name="descriptionProduitModify_${produit.getIdProduit()}" class="materialize-textarea"
+                                                          required="required">${produit.getDescriptionProduit()}</textarea>
+                                                <label for="descriptionProduitModify_${produit.getIdProduit()}">Description</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="prixProduitModify_${produit.getIdProduit()}" name="prixProduitModify_${produit.getIdProduit()}" value="${produit.getPrixStandartProduit()}" type="number" class="validate" required="required">
+                                                <label for="prixProduitModify_${produit.getIdProduit()}">Prix Standard du produit</label>
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <input id="quantiteProduitModify_${produit.getIdProduit()}" name="quantiteProduitModify_${produit.getIdProduit()}" value="${produit.getQuantiteUnitaireProduit()}" type="number" class="validate" required="required">
+                                                <label for="quantiteProduitModify_${produit.getIdProduit()}">Quantité unitaire</label>
+                                            </div>
+                                            <div class="col s6">
+                                                <label>Sous catégories</label> <select required="required" class="browser-default" id="ssCategorieProduitModify_${produit.getIdProduit()}" name="ssCategorieProduitModify_${produit.getIdProduit()}">
+                                                    <c:forEach var="ssCategorie" items="${listSsCategorie}">
+                                                        <c:if test="${ssCategorie.getNomSousCategorie() == produit.getIdSousCategorieProduit().getNomSousCategorie()}">
+                                                            <option value="${ssCategorie.getIdSousCategorie()}" class="active">${ssCategorie.getNomSousCategorie()}</option>
+                                                        </c:if>
+                                                        <c:if test="${ssCategorie.getNomSousCategorie() != produit.getIdSousCategorieProduit().getNomSousCategorie()}">
+                                                            <option value="${ssCategorie.getIdSousCategorie()}">${ssCategorie.getNomSousCategorie()}</option>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="col s12 input-field">
+                                                <a class="btn col s12 dark-purple center-align modal-trigger" onclick="$('#button').val('modifyProduct'); $('#selectedProduct').val('${produit.getIdProduit()}'); $('#form').submit();">Valider</a>
                                             </div>
                                         </div>
                                     </div>

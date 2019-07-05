@@ -75,6 +75,24 @@ public class Vendeur extends HttpServlet {
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/vendeur"));
                 }
                 break;
+            case "modifyProduct":
+                Produit produitModify;
+                produitModify = new Produit(Integer.parseInt(request.getParameter("selectedProduct")));
+                produitModify.setNameProduit(request.getParameter("nomProduitModify_" + request.getParameter("selectedProduct")));
+                produitModify.setDescriptionProduit(request.getParameter("descriptionProduitModify_" + request.getParameter("selectedProduct")));
+                produitModify.setProductCode(request.getParameter("codeProduitModify_" + request.getParameter("selectedProduct")));
+                produitModify.setPrixStandartProduit((BigDecimal.valueOf(Double.valueOf(request.getParameter("prixProduitModify_" + request.getParameter("selectedProduct"))))));
+                produitModify.setQuantiteUnitaireProduit(Integer.parseInt(request.getParameter("quantiteProduitModify_" + request.getParameter("selectedProduct"))));
+                SousCategorie ssCategorieProductModify = data.getSousCategorieById(request.getParameter("ssCategorieProduitModify_" + request.getParameter("selectedProduct")));
+                produitModify.setIdSousCategorieProduit(ssCategorieProductModify);
+                model.Vendeur vend = (model.Vendeur) session.getAttribute("vendeur");
+                produitModify.setIdVendeur(vend);
+                if (data.updateProduit(produitModify, vend.getIdVendeur().toString())) {
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/vendeur"));
+                } else {
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/vendeur"));
+                }
+                break;
             case "account":
                 if (session.getAttribute("user") != null) {
                     response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/account"));

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Utilisateur;
 
 /**
  *
@@ -35,12 +36,21 @@ public class ProductInfo extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HomeControler data = new HomeControler();
-        //request.setAttribute("produits", data.getVendeurProduits(new Vendeur(1)));
         request.setAttribute("listCategories", data.getSousCategoriesByCategorie());
         HttpSession session = request.getSession();
         request.setAttribute("produit", data.getUnitProduit((String) session.getAttribute("productId")));
+        String userId = "";
+        if (session.getAttribute("user") != null) {
+            Utilisateur user = (Utilisateur) session.getAttribute("user");
+            userId = user.getIdUtilisateur().toString();
+        }
         AsyncContext asynContext = request.startAsync(request, response);
-        asynContext.dispatch("/productInfo.jsp");
+        if (data.addLogConsult((String) session.getAttribute("productId"), userId)) {
+
+            asynContext.dispatch("/productInfo.jsp");
+        } else {
+            asynContext.dispatch("/productInfo.jsp");
+        }
     }
 
     /**
@@ -78,6 +88,19 @@ public class ProductInfo extends HttpServlet {
             case "client":
                 request.setAttribute("data", data.getListCategories());
                 request.getRequestDispatcher("/listClients.jsp").forward(request, response);
+                break;
+            case "addPaner":
+                if (session.getAttribute("user") != null) {
+                    model.Panier paner = new model.Panier();
+                    Utilisateur user = (Utilisateur) session.getAttribute("user");
+                    paner.setIdProduit(data.getUnitProduit(request.getParameter("selectedProduct")));
+                    paner.setIdUser(user);
+                    paner.setQuantiteProduit(1);
+                    data.addPanier(paner);
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/panier"));
+                } else {
+                    response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/signin"));
+                }
                 break;
             default:
                 doGet(request, response);

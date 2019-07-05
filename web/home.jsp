@@ -21,13 +21,14 @@
                     <div class="row">
                         <c:forEach var="produit" items="${produits}">
                             <div class="col s12 m4 l4">
-                                <div class="card animate fadeLeft">
+                                <div class="card animate fadeLeft" style="height: 500px">
                                     <div class="card-content">
                                         <div onclick="$('#selectedProduct').val('${produit.getIdProduit()}');$('#button').val('selectedProduct');$('#form').submit();" style="cursor: pointer;">
                                             <p>${produit.getIdVendeur().getNomVendeur()}</p>
                                             <span class="card-title text-ellipsis">${produit.getNameProduit()}</span>
-                                            <img src="${produit.getImgProduit()}" class="responsive-img" alt="">
+                                            <img src="${produit.getImgProduit()}" class="responsive-img" alt="" style=" height: 300px">
                                         </div>
+                                        <div class="row"></div>
                                         <div class="row">
                                             <h5 class="col s12 m12 l8 mt-3">${produit.getPrixStandartProduit()}€</h5>
                                             <a class="col s12 m12 l4 mt-2 waves-effect waves-light gradient-45deg-deep-purple-blue btn modal-trigger"
@@ -59,8 +60,8 @@
                                     </div>
                                 </div>
                             </div>
-                    </c:forEach>
-                        </div>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
         </div>

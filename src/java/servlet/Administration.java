@@ -7,7 +7,6 @@ package servlet;
 
 import controler.HomeControler;
 import java.io.IOException;
-import java.math.BigDecimal;
 import javax.servlet.AsyncContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Categorie;
-import model.Produit;
-import model.SousCategorie;
-import model.Utilisateur;
+import model.Entrepot;
 
 @WebServlet(name = "administration", urlPatterns = {"/administration"}, asyncSupported = true)
 public class Administration extends HttpServlet {
@@ -41,6 +38,7 @@ public class Administration extends HttpServlet {
         request.setAttribute("listSsCategorie", data.getListSsCategories());
         request.setAttribute("listCategorie", data.getListCategories());
         request.setAttribute("produits", data.getVendeurProduits(vendeur));
+        request.setAttribute("stats", data.getAllConsult());
         AsyncContext asynContext = request.startAsync(request, response);
         asynContext.dispatch("/administration.jsp");
     }
@@ -81,6 +79,24 @@ public class Administration extends HttpServlet {
                 Categorie deleteCategoryCat = data.getCategoryById(request.getParameter("nom_categorie_deletecat"));
                 data.deleteCategory(deleteCategoryCat);
                 doGet(request, response);
+                break;
+            case "addWarehouse":
+                Entrepot warehouse = new Entrepot();
+                warehouse.setAdresseEntrepot(request.getParameter("adresse_entrepot"));
+                warehouse.setCityEntrepot(request.getParameter("city_entrepot"));
+                warehouse.setLibelleEntrepot(request.getParameter("libelle_entrepot"));
+                if (data.addWarehouse(warehouse)) {
+                    doGet(request, response);
+                } else {
+                    doGet(request, response);
+                }
+                break;
+            case "blockUser":
+
+                break;
+            case "disconnect":
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath() + "/home"));
+                request.getSession().invalidate();
                 break;
             default:
                 doGet(request, response);

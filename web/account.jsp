@@ -83,14 +83,14 @@
                             </div>
                         </div>
                         <div class="col s12 m8" style="margin-top: 5ch">
-                            <ul class="collection with-header">
+                            <ul class="collection with-header" style="border:0 !important;">
                                 <li class="collection-header">
                                     <h5>Vos commandes :</h5>
                                 </li>
                                 <li  style="border:0 !important;">
                                     <c:forEach var="commande" items="${commandes}">
                                         <ul class="collapsible" data-collapsible="accordion" style="box-shadow: none !important; border : 0 !important;;">
-                                            <li>
+                                            <li style="border:0 !important;">
                                                 <div class="collapsible-header"><i class="material-icons">payment</i>Commande n°${commande.key.getIdCommande()}</div>
                                                 <div class="collapsible-body">
                                                     <table>
