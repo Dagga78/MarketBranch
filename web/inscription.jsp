@@ -7,6 +7,12 @@
         <title>Inscription</title>
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script type="text/javascript" src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/firebasejs/6.1.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-storage.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        <script type="text/javascript" src="js/init.js"></script>
     </head>
     <body>
         <form method="POST" action="inscription" id="form">
